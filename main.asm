@@ -112,6 +112,9 @@ play_sound
         ;
         ; play CHANNEL1
         lda durationChannel1
+        cmp #$ff                ; $ff in duration = end of this channel track
+        beq play1_end
+        cmp #$00
         beq +
         dec durationChannel1
         jmp play1_end
@@ -126,9 +129,9 @@ play_sound
         sta durationChannel1
 
         ; end of voic1 - never increment be silent
-        ldy #0
+        ldy #1
         jsr mod_voice1
-        cmp #$00
+        cmp #$ff
         beq +
 
         inc tune_line
@@ -145,6 +148,9 @@ play1_end
         ;
         ; play CHANNEL2
         lda durationChannel2
+        cmp #$ff                ; $ff in duration = end of this channel lsit
+        beq play2_end
+        cmp #$00
         beq +
         dec durationChannel2
         jmp play2_end
@@ -159,9 +165,9 @@ play1_end
         sta durationChannel2
 
         ; end of voic1 - never increment be silent
-        ldy #0
+        ldy #1
         jsr mod_voice2
-        cmp #$00
+        cmp #$ff
         beq +
 
         inc tune_line
@@ -177,6 +183,9 @@ play2_end
         ;
         ; play CHANNEL3
         lda durationChannel3
+        cmp #$ff                ; $ff in duration = end of this channel lsit
+        beq play3_end
+        cmp #$00
         beq +
         dec durationChannel3
         jmp play3_end
@@ -191,9 +200,9 @@ play2_end
         sta durationChannel3
 
         ; end of voic1 - never increment be silent
-        ldy #0
+        ldy #1
         jsr mod_voice3
-        cmp #$00
+        cmp #$ff
         beq +
 
         inc tune_line
@@ -227,6 +236,21 @@ play3_end
         sta tune_line
 
 play_end
+        ; all three channels end = $ff in duration?
+        lda durationChannel1
+        cmp #$ff
+        bne +
+        lda durationChannel2
+        cmp #$ff
+        bne +
+        lda durationChannel3
+        cmp #$ff
+        bne +
+
+        ; re init
+        jsr init_sound
++
+play_return
         pla
         tay
         pla

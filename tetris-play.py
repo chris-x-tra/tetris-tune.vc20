@@ -212,7 +212,7 @@ def export_acme(voice_name, notes, mapping):
             line = "    !byte "
     if line.strip() != "!byte":
         print(line[:-2])
-    line = "    !byte $00, $0a"
+    line = "    !byte $00, $ff"
     print(line)
     print()
 
