@@ -88,6 +88,17 @@ init_sound
         sta mod_voice1+1
         lda #>voice1
         sta mod_voice1+2
+
+        lda #<voice2
+        sta mod_voice2+1
+        lda #>voice2
+        sta mod_voice2+2
+
+        lda #<voice3
+        sta mod_voice3+1
+        lda #>voice3
+        sta mod_voice3+2
+
         rts
 
         ;
