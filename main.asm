@@ -215,23 +215,27 @@ play2_end
 +
 play3_end
 
+        ; wenn sich was gea"ndert hat,
+        ; ausgabe auf Bildschirm
         lda tune_line
         cmp #$00
         beq play_end
 
         ; ausgabe noten
-	lda #HOME
-	jsr PRINT
+        ldy #0
         lda tune_channels+0
-        +prhex
-	lda #$20
-	jsr PRINT
+        jsr hexout
+
+        iny
+        iny
         lda tune_channels+1
-        +prhex
-	lda #$20
-	jsr PRINT
+        jsr hexout
+
+        iny
+        iny
         lda tune_channels+2
-        +prhex
+        jsr hexout 
+
         lda #$00
         sta tune_line
 

@@ -179,7 +179,7 @@ note_to_vic = {
     "c2": 0xBD, "d2": 0xC4, "e2": 0xCA, "f2": 0xCD,
     "g2": 0xD3, "a2": 0xD8, "h2": 0xDC,
     "c3": 0xDE, "d3": 0xE2, "e3": 0xE5, "f3": 0xE6,
-    "p":  0x7F,  # Pause
+    "p":  0x00,  # Pause
 
     # Voice 2 (high)
     "c4": 0xDE, "d4": 0xE2, "e4": 0xE5, "f4": 0xE6,
@@ -190,7 +190,7 @@ note_to_vic = {
 def export_hex(notes, note_map):
     out = []
     for note, dur in notes:
-        freq = note_map.get(note, 0x7F)  # Default: Pause
+        freq = note_map.get(note, 0x00)  # Default: Pause
         out.append((freq, dur))
     return out
 
@@ -204,7 +204,7 @@ def export_acme(voice_name, notes, mapping):
     print(voice_name)
     line = "    !byte"
     for i, (note, dur) in enumerate(notes, 1):
-        freq = mapping.get(note, 0x7F)
+        freq = mapping.get(note, 0x00)
         dur *= 20
         line += f"${freq:02X}, ${dur:02X}, "
         if i % 8 == 0:

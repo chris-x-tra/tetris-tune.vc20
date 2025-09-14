@@ -87,7 +87,7 @@ durationChannel4 = $6b
 ; ---
 ; ---
 ; ---
-; subroutine: print accu in hex on screen
+; subroutine: print accu in hex on screen via FFD2 / CHAROUT
 ; accu gets destroyed
 prhex   pha             ; save a
         lsr             ; get high nibble
@@ -109,6 +109,47 @@ prhex   pha             ; save a
         jsr prhex
         pla
 }
+
+
+;------------------------------------------------
+; HEXAUSGABE: schreibt A als 2-stelliges Hex ins
+; Bildschirmspeicher (ab $0400).
+; Y = Offset in den Screen (0..999)
+;------------------------------------------------
+
+hexout
+    pha             ; Wert sichern
+    lsr             ; oberes Nibble nach unten schieben
+    lsr
+    lsr
+    lsr
+    jsr nibbleout   ; erstes Zeichen ausgeben
+
+    pla             ; Wert zuruckholen
+    and #$0F        ; nur unteres Nibble
+    jsr nibbleout   ; zweites Zeichen ausgeben
+    rts
+
+;------------------------------------------------
+; NIBBLEOUT: erwartet Nibble in A (0-15),
+; schreibt Zeichen an $0400,Y und erhoht Y.
+;------------------------------------------------
+nibbleout
+    cmp #10
+    bcc digit       ; 0-9
+    sbc #9          ; A=10 -> 1, A=11 -> 2, ... A=15 -> 6
+    ;sta $0400,y
+    sta $1000,y
+    iny
+    rts
+
+digit:
+    adc #$30        ; A=0 -> $30 ('0'), ... A=9 -> $39
+    ;sta $0400,y
+    sta $1000,y
+    iny
+    rts
+
 
 
 ; ---
