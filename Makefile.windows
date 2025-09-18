@@ -1,0 +1,40 @@
+TARGETS :=  tetris-tune
+
+DEPENDS := main.asm  var_const.asm tune.asm
+
+C1541 := c:\cbm\vice\c1541.exe
+#C1541 := c1541
+
+XVIC := c:\cbm\vice\xvic.exe
+#XVIC := xvic
+
+ACME := c:\cbm\acme\acme.exe
+#ACME := acme
+
+RM := del
+#RM := rm -f
+
+#.PRECIOUS: %.d64
+
+all: $(TARGETS)
+
+%.prg: %.asm $(DEPENDS)
+	$(ACME) -l labels.txt --cpu 6510 --format cbm --outfile $@ $<
+
+%.d64: %.prg
+	$(C1541) -format foo,id d64 $@ -write $<
+
+%: %.d64
+	$(XVIC) $<
+
+clean:
+	$(RM) $(TARGETS) *.prg *.d64
+
+tune.asm: tetris-play.py
+	python tetris-play.py --export > tune.asm
+# ---
+# gmake
+# gmake all
+# gmake victris.prg
+# gmake clean
+# ---
