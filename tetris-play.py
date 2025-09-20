@@ -26,6 +26,21 @@ NOTE_FREQUENCIES = {
     "c5": 523.25, "d5": 587.33, "e5": 659.25,
     "f5": 698.46, "g5": 783.99,
 }
+note_to_vic = {
+    # Voice 1 (low)
+    "g1": 0xA7, "a1": 0xB0, "h1": 0xB9,
+    "c2": 0xBD, "d2": 0xC4, "e2": 0xCA, "f2": 0xCD,
+    "g2": 0xD3, "a2": 0xD8, "h2": 0xDC,
+    "c3": 0xDE, "d3": 0xE2, "e3": 0xE5, "f3": 0xE6,
+
+    "p":  0x00,  # Pause
+
+    # Voice 2 (high)
+    "c4": 0xDE, "d4": 0xE2, "e4": 0xE5, "f4": 0xE6,
+    "g4": 0xEA, "a4": 0xEB, "h4": 0xED,
+    "c5": 0xEE, "d5": 0xF0, "e5": 0xF2, "f5": 0xF3,
+    "g5": 0xF4, "a5": 0xF5, "h5": 0xF6,
+}
 
 # deine Noten jetzt als (note, duration)
 notes1 = [
@@ -173,20 +188,6 @@ def play_three_voices(notes1, notes2, notes3, unit_length=0.25, samplerate=44100
     sd.play(song, samplerate=samplerate)
     sd.wait()
 
-note_to_vic = {
-    # Voice 1 (low)
-    "g1": 0xA7, "a1": 0xB0, "h1": 0xB9,
-    "c2": 0xBD, "d2": 0xC4, "e2": 0xCA, "f2": 0xCD,
-    "g2": 0xD3, "a2": 0xD8, "h2": 0xDC,
-    "c3": 0xDE, "d3": 0xE2, "e3": 0xE5, "f3": 0xE6,
-    "p":  0x00,  # Pause
-
-    # Voice 2 (high)
-    "c4": 0xDE, "d4": 0xE2, "e4": 0xE5, "f4": 0xE6,
-    "g4": 0xEA, "a4": 0xEB, "h4": 0xED,
-    "c5": 0xEE, "d5": 0xF0, "e5": 0xF2, "f5": 0xF3,
-    "g5": 0xF4, "a5": 0xF5, "h5": 0xF6,
-}
 def export_hex(notes, note_map):
     out = []
     for note, dur in notes:

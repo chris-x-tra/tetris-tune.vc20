@@ -19,6 +19,11 @@ DUR_2_4 = 24
 DUR_3_4 = 36
 DUR_4_4 = 48
 
+DRUM_P = 48
+DRUM_P_2 = 24
+
+BD_P = 1
+SD_P = 1
 # ---------------------------------------
 # Frequenztabelle (alles klein geschrieben)
 # ---------------------------------------
@@ -99,28 +104,44 @@ pattern1 = [
         ]
     # 2. Abschnitt: Bassdrum auf 1 und 3
 pattern2 = [
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("bd", 1), ("p", 1)
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
+        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P)
         ]
     # 3. Abschnitt: Bassdrum & Snare im Wechsel
 pattern3 = [
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1),
-        ("bd", 1), ("p", 1), ("sd", 1), ("p", 1), ("bd", 1), ("p", 1), ("sd", 1), ("p", 1)
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2)
         ]
    # zusammenfgen:
 notes3 = pattern1 + pattern2 + pattern3
+
+bd_pattern = [
+    (0x88, BD_P), (0x90, BD_P), (0x98, BD_P), (0xA0, BD_P),
+#    (0xA8, BD_P), (0xB0, BD_P), (0xB8, BD_P), (0xBF, BD_P),
+    (0x00, BD_P), (0x00, BD_P), (0x00, BD_P), (0x00, BD_P),
+    (0x00, BD_P), (0x00, BD_P), (0x00, BD_P), (0x00, BD_P),
+    (0x00, BD_P), (0x00, BD_P), (0x00, BD_P), (0x00, BD_P)
+]
+
+sd_pattern = [
+    (0xB0, SD_P), (0xB4, SD_P), (0xB8, SD_P), (0xB4, SD_P),
+#    (0xB0, SD_P), (0xA8, SD_P), (0xA0, SD_P), (0x98, SD_P),
+    (0x00, SD_P), (0x00, SD_P), (0x00, SD_P), (0x00, SD_P),
+    (0x00, SD_P), (0x00, SD_P), (0x00, SD_P), (0x00, SD_P),
+    (0x00, SD_P), (0x00, SD_P), (0x00, SD_P), (0x00, SD_P)
+]
 
 # ---------------------------------------
 # Bassdrum Synthese (Sweep)
@@ -277,8 +298,8 @@ def tracker_player(stdscr, notes1, notes2, notes3,
         stdscr.addstr(0, 0, "Step | Voice1 | Voice2 | Voice3")
         stdscr.addstr(1, 0, "-"*35)
 
-        start = max(0, i-10)   # nur 10 Zeilen vorher zeigen
-        end = min(maxlen, i+15) # ein Stück nach vorne
+        start = max(0, i-10)        # nur 10 Zeilen vorher zeigen
+        end = min(maxlen, i+15)     # ein Stuck nach vorne
         for row, j in enumerate(range(start, end), start=2):
             marker = ">" if j == i else " "
             stdscr.addstr(row, 0,
@@ -326,26 +347,34 @@ def export_acme(voice_name, notes, mapping):
     line = "    !byte"
     count = 0
 
-    for i, (note, dur) in enumerate(notes, 1):
+    for note, dur in notes:
         note_key = str(note).lower()
 
-        # Lookup im mapping (falls nicht vorhanden -> 0x00)
-        raw = mapping.get(note_key, mapping.get(note, 0x00))
-        try:
-            freq = _normalize_to_byte(raw)
-        except Exception as e:
-            print(f"Warning: mapping value for {note_key!r} couldn't be parsed: {e}. Using $00.")
-            freq = 0x00
+        # Drum-Pattern-Expansion
+        if note_key == "bd":
+            pattern = bd_pattern
+        elif note_key == "sd":
+            pattern = sd_pattern
+        else:
+            raw = mapping.get(note_key, mapping.get(note, 0x00))
+            try:
+                freq = _normalize_to_byte(raw)
+            except Exception as e:
+                print(f"Warning: mapping value for {note_key!r} couldn't be parsed: {e}. Using $00.")
+                freq = 0x00
+            pattern = [(freq, dur)]
 
-        line += f" ${freq:02X}, ${dur:02X}, "
-        count += 1
+        # Ausgabe der Pattern-Elemente
+        for freq, d in pattern:
+            line += f" ${freq:02X}, ${d:02X}, "
+            count += 1
+            if count % 8 == 0:
+                print(line[:-2])  # letzte ", " entfernen
+                line = "    !byte "
 
-        if i % 8 == 0:
-            print(line[:-2])  # letzte ", " entfernen
-            line = "    !byte "
     if line.strip() != "!byte":
         print(line[:-2])
-    # Endmarker wie du ihn hattest
+    # Endmarker
     print("    !byte $00, $ff\n")
 
 # ---------------------------------------

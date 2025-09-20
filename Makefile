@@ -30,8 +30,8 @@ all: $(TARGETS)
 clean:
 	$(RM) $(TARGETS) *.prg *.d64
 
-tune.asm: tetris-play.py
-	tetris-play.py --export > tune.asm
+tune.asm: tetris-play2.py
+	tetris-play2.py --export > tune.asm
 # ---
 # gmake
 # gmake all

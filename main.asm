@@ -59,7 +59,6 @@ mainloop
         ; init
 
 tune_over       !byte 00,00,00
-tune_line       !byte 00
 tune_channels   !byte 00,00,00
 
 init_sound
@@ -71,12 +70,12 @@ init_sound
         sta VIC_CHANNEL1
         sta VIC_CHANNEL2
         sta VIC_CHANNEL3
+        sta VIC_CHANNEL4
 
         lda #$ff
         sta tune_over
         sta tune_over+1
         sta tune_over+2
-        sta tune_line
 
         lda #$00
         sta durationChannel1
@@ -134,7 +133,6 @@ play_sound
         cmp #$ff
         beq +
 
-        inc tune_line
         clc
         lda mod_voice1+1
         adc #2
@@ -170,7 +168,6 @@ play1_end
         cmp #$ff
         beq +
 
-        inc tune_line
         clc
         lda mod_voice2+1
         adc #2
@@ -193,7 +190,7 @@ play2_end
         ; get next note and duration
         ldy #0
         jsr mod_voice3
-        sta VIC_CHANNEL3
+        sta VIC_CHANNEL4        ; rauschen
         sta tune_channels+2
         ldy #1
         jsr mod_voice3
@@ -205,7 +202,6 @@ play2_end
         cmp #$ff
         beq +
 
-        inc tune_line
         clc
         lda mod_voice3+1
         adc #2
@@ -215,11 +211,7 @@ play2_end
 +
 play3_end
 
-        ; wenn sich was gea"ndert hat,
         ; ausgabe auf Bildschirm
-        lda tune_line
-        cmp #$00
-        beq play_end
 
         ; ausgabe noten
         ldy #0
@@ -236,8 +228,21 @@ play3_end
         lda tune_channels+2
         jsr hexout 
 
-        lda #$00
-        sta tune_line
+        ;
+        ldy #22
+        lda durationChannel1
+        jsr hexout
+
+        iny
+        iny
+        lda durationChannel2
+        jsr hexout
+
+        iny
+        iny
+        lda durationChannel3
+        jsr hexout 
+
 
 play_end
         ; all three channels end = $ff in duration?
