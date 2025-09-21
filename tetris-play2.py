@@ -30,6 +30,9 @@ DRUM_P_2 = 20
 
 BD_P = 1
 SD_P = 1
+
+BDV2_P = 1
+
 # ---------------------------------------
 # Frequenztabelle (alles klein geschrieben)
 # ---------------------------------------
@@ -60,6 +63,9 @@ note_to_vic = {
     "bd": "0xF0",  # Bassdrum
     "sd": "0xF1"   # Snare
 }
+
+    ###
+    ###
     # Voice 1: Bass
 notes1 = [
     ("e2",DUR_1_4),("e3",DUR_1_4),("e2",DUR_1_4),("e3",DUR_1_4),("e2",DUR_1_4),("e3",DUR_1_4),("e2",DUR_1_4),("e3",DUR_1_4),
@@ -80,6 +86,8 @@ notes1 = [
     ("h1",DUR_1_4),("h2",DUR_1_4),("h1",DUR_1_4),("h2",DUR_1_4),("h1",DUR_1_4),("h2",DUR_1_4),("h1",DUR_1_4),("h2",DUR_1_4),
     ]
 
+    ###
+    ###
     # Voice 2: Melodie
 notes2 = [
     ("e5",DUR_1_4),("h4",DUR_1_4),("c5",DUR_1_4),("d5",DUR_1_4),("c5",DUR_1_4),("h4",DUR_1_4),
@@ -100,7 +108,26 @@ notes2 = [
     ("d5",DUR_1_4),("e5",DUR_1_4),("p",DUR_1_4),("c5",DUR_1_4),("a4",DUR_1_4),("a4",DUR_1_4),
     ]
 
-    # Voice 3: Schlagzeug
+    ###
+    ###
+    # Voice 3: nur im acme export: basedrum synthese
+pattern_bdv2 = [
+        ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
+        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1)
+        ]
+
+notes3 = pattern_bdv2 * 3
+
+    ###
+    ###
+    # Voice 4: (Teil-)Schlagzeug
     # 1. Abschnitt: nur Pausen
 pattern1 = [
         ("p", 1), ("p", 1), ("p", 1), ("p", 1),
@@ -108,7 +135,8 @@ pattern1 = [
         ("p", 1), ("p", 1), ("p", 1), ("p", 1),
         ("p", 1), ("p", 1), ("p", 1), ("p", 1)
         ]
-    # 2. Abschnitt: Bassdrum auf 1 und 3
+
+    # 2. Abschnitt: Bassdrum auf 1 und 3, hoert sich am vc 20 aber eher an wie snare
 pattern2 = [
         ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
         ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
@@ -119,6 +147,7 @@ pattern2 = [
         ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
         ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2)
         ]
+
     # 3. Abschnitt: Bassdrum & Snare im Wechsel
 pattern3 = [
         ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
@@ -130,10 +159,10 @@ pattern3 = [
         ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2),
         ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2)
         ]
-   # zusammenfgen:
-#notes3 = pattern1 + pattern2 + pattern3
+# zusammenfgen:
+#notes4 = pattern1 + pattern2 + pattern3
 
-notes3 = pattern2 * 3
+notes4 = pattern2 * 3
 
 bd_pattern = [
     (0xF0, BD_P), (0xD0, BD_P), (0xC0, BD_P), (0x80, BD_P),
@@ -143,10 +172,23 @@ bd_pattern = [
 
 sd_pattern = [
     (0xB0, SD_P), (0xB4, SD_P), (0xB8, SD_P), (0xB4, SD_P),
-#    (0xB0, SD_P), (0xA8, SD_P), (0xA0, SD_P), (0x98, SD_P),
+    (0xB0, SD_P), (0xA8, SD_P), (0xA0, SD_P), (0x98, SD_P),
     (0x00, SD_P), (0x00, SD_P), (0x00, SD_P), (0x00, SD_P),
     (0x00, SD_P), (0x00, SD_P), (0x00, SD_P), (0x00, SD_P),
     (0x00, SD_P), (0x00, SD_P), (0x00, SD_P), (0x00, SD_P)
+]
+
+bdv2_pattern = [
+    (0xF0, BDV2_P),  # sehr hoch
+    (0xD0, BDV2_P),  # hoch
+    (0xB0, BDV2_P),  # mittelhoch
+    (0x90, BDV2_P),  # mitteltief
+    (0x70, BDV2_P),  # tief
+    (0x50, BDV2_P),  # sehr tief
+    (0x30, BDV2_P),  # Sub
+    (0x00, BDV2_P),  # aus
+    (0x00, BDV2_P),  # Stille
+    (0x00, BDV2_P)
 ]
 
 # ---------------------------------------
@@ -361,6 +403,8 @@ def export_acme(voice_name, notes, mapping):
             pattern = bd_pattern
         elif note_key == "sd":
             pattern = sd_pattern
+        elif note_key == "bdv2":
+            pattern = bdv2_pattern
         else:
             raw = mapping.get(note_key, mapping.get(note, 0x00))
             try:
@@ -403,3 +447,4 @@ if __name__ == "__main__":
         export_acme("voice1", notes1, note_to_vic)
         export_acme("voice2", notes2, note_to_vic)
         export_acme("voice3", notes3, note_to_vic)
+        export_acme("voice4", notes4, note_to_vic)

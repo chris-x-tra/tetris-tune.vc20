@@ -46,13 +46,14 @@ mainloop
 
         jsr play_sound
 
-
 	jmp mainloop
 
+        ; -----
         ; init
+        ; -----
 
-tune_over       !byte 00,00,00
-tune_channels   !byte 00,00,00
+tune_over       !byte 00,00,00,00
+tune_channels   !byte 00,00,00,00
 
 init_sound
 
@@ -90,6 +91,11 @@ init_sound
         sta mod_voice3+1
         lda #>voice3
         sta mod_voice3+2
+
+        lda #<voice4
+        sta mod_voice4+1
+        lda #>voice4
+        sta mod_voice4+2
 
         rts
 
@@ -183,7 +189,7 @@ play2_end
         ; get next note and duration
         ldy #0
         jsr mod_voice3
-        sta VIC_CHANNEL4        ; rauschen
+        sta VIC_CHANNEL3
         sta tune_channels+2
         ldy #1
         jsr mod_voice3
@@ -204,8 +210,44 @@ play2_end
 +
 play3_end
 
-        ; ausgabe auf Bildschirm
+        ;
+        ; play CHANNEL4
+        lda durationChannel4
+        cmp #$ff                ; $ff in duration = end of this channel lsit
+        beq play4_end
+        cmp #$00
+        beq +
+        dec durationChannel4
+        jmp play4_end
++
+        ; get next note and duration
+        ldy #0
+        jsr mod_voice4
+        sta VIC_CHANNEL3
+        sta tune_channels+3
+        ldy #1
+        jsr mod_voice4
+        sta durationChannel4
 
+        ; end of voic1 - never increment be silent
+        ldy #1
+        jsr mod_voice4
+        cmp #$ff
+        beq +
+
+        clc
+        lda mod_voice4+1
+        adc #2
+        sta mod_voice4+1
+        bcc +
+        inc mod_voice4+2
++
+play4_end
+
+
+
+
+        ; ausgabe auf Bildschirm
         ; ausgabe noten
         ldy #0+2*22+5
         lda tune_channels+0
@@ -219,6 +261,11 @@ play3_end
         iny
         iny
         lda tune_channels+2
+        jsr hexout 
+
+        iny
+        iny
+        lda tune_channels+3
         jsr hexout 
 
         ;
@@ -235,6 +282,12 @@ play3_end
         iny
         lda durationChannel3
         jsr hexout 
+
+        iny
+        iny
+        lda durationChannel4
+        jsr hexout 
+
 
 
 play_end
@@ -263,5 +316,7 @@ mod_voice1  lda voice1,y
 mod_voice2  lda voice2,y
         rts
 mod_voice3  lda voice3,y
+        rts
+mod_voice4  lda voice4,y
         rts
 
