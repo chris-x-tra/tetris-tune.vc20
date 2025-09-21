@@ -37,6 +37,7 @@ main
 
         jsr init_sound
 
+        sei
 mainloop
 
 	; https://codebase64.org/doku.php?id=base:making_stable_raster_routines#making_stable_raster_routines_c64_and_vic-20
@@ -45,8 +46,85 @@ mainloop
 	bne -
 
         jsr play_sound
+        jsr get_key_via
 
 	jmp mainloop
+
+
+        ; -----
+        ; key
+        ; -----
+
+key1    !byte 0
+key2    !byte 0
+key3    !byte 0
+key4    !byte 0
+
+get_key_via
+
+        lda #%01111111
+        sta $9120
+        lda $9121
+
+        cmp #%11111110        ; key 2
+        bne +
+        ldy #$01
+        sty key2
+
++       cmp #%11111101        ; key 4
+        bne +
+        ldy #$01
+        sty key4
+
++       cmp #$fb         ; key 6
+        bne +
+        ldy #$00
+        sty key2
+
++       cmp #$f7          ; key  8
+        bne +
+        ldy #$00
+        sty key4
++
+        ; ----
+        lda #%11111110
+        sta $9120      
+        lda $9121
+
+        cmp #$fe        ; key 1
+        bne +
+        ldy #$01
+        sty key1
+
++        cmp #$fd        ; key 3
+        bne +
+        ldy #$01
+        sty key3
+
++       cmp #$fb          ; key 5
+        bne +
+        ldy #$00
+        sty key2
+
++       cmp #$f7          ; key  7
+        bne +
+        ldy #$00
+        sty key4
+
++
+        lda key1
+        ldy #6*22+5
+        jsr hexout
+        lda key2
+        ldy #6*22+9
+        jsr hexout
+        lda key3
+        ldy #6*22+13
+        jsr hexout
+        lda key4
+        ldy #6*22+17
+        jsr hexout
+        rts
 
         ; -----
         ; init
@@ -120,7 +198,11 @@ play_sound
         ; get next note and duration
         ldy #0
         jsr mod_voice1
+
+        ldx key1                ; stimme abschaltbar
+        bne +
         sta VIC_CHANNEL1
++
         sta tune_channels
         ldy #1
         jsr mod_voice1
@@ -155,7 +237,12 @@ play1_end
         ; get next note and duration
         ldy #0
         jsr mod_voice2
+
+        ldx key2                ; stimme abschaltbar
+        bne +
         sta VIC_CHANNEL2
++        
+
         sta tune_channels+1
         ldy #1
         jsr mod_voice2
@@ -189,7 +276,11 @@ play2_end
         ; get next note and duration
         ldy #0
         jsr mod_voice3
+
+        ldx key3                ; stimme abschaltbar
+        bne +
         sta VIC_CHANNEL3
++
         sta tune_channels+2
         ldy #1
         jsr mod_voice3
@@ -223,7 +314,11 @@ play3_end
         ; get next note and duration
         ldy #0
         jsr mod_voice4
-        sta VIC_CHANNEL3
+
+        ldx key4                ; stimme abschaltbar
+        bne +
+        sta VIC_CHANNEL4
++
         sta tune_channels+3
         ldy #1
         jsr mod_voice4
@@ -244,8 +339,27 @@ play3_end
 +
 play4_end
 
-
-
+        ; beim abschalten abnullen
+        lda key1                ; stimme abschaltbar
+        beq +
+        lda #0
+        sta VIC_CHANNEL1
++       
+        lda key2                ; stimme abschaltbar
+        beq +
+        lda #0
+        sta VIC_CHANNEL2
++
+        lda key3                ; stimme abschaltbar
+        beq +
+        lda #0
+        sta VIC_CHANNEL3
++
+        lda key4                ; stimme abschaltbar
+        beq +
+        lda #0
+        sta VIC_CHANNEL4
++
 
         ; ausgabe auf Bildschirm
         ; ausgabe noten
