@@ -110,20 +110,14 @@ notes2 = [
 
     ###
     ###
-    # Voice 3: nur im acme export: basedrum synthese
-pattern_bdv2 = [
-        ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1), ("p", DRUM_P_2),
-        ("bdv2", 1), ("p", DRUM_P_2), ("bdv2", 1)
-        ]
+    # Voice 3: 
+notes3 =  [
+        ("p", 1), ("p", 1), ("p", 1), ("p", 1),
+        ("p", 1), ("p", 1), ("p", 1), ("p", 1),
+        ("p", 1), ("p", 1), ("p", 1), ("p", 1),
+        ("p", 1), ("p", 1), ("p", 1), ("p", 1)
+    ]
 
-notes3 = pattern_bdv2 * 3
 
     ###
     ###

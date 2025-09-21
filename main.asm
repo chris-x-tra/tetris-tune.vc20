@@ -1,3 +1,11 @@
+;---
+;
+; 4 voices vc 20 tune player by chrissie ^ x-tra-designs 09.2025
+;
+; keys 1 - 4 disable voice
+; keys 5 - 8 enable voice again
+;
+;---
 
 main
 
@@ -37,7 +45,8 @@ main
 
         jsr init_sound
 
-        sei
+        sei             ; no interrupts!
+
 mainloop
 
 	; https://codebase64.org/doku.php?id=base:making_stable_raster_routines#making_stable_raster_routines_c64_and_vic-20
@@ -66,6 +75,7 @@ get_key_via
         sta $9120
         lda $9121
 
+
         cmp #%11111110        ; key 2
         bne +
         ldy #$01
@@ -76,7 +86,7 @@ get_key_via
         ldy #$01
         sty key4
 
-+       cmp #$fb         ; key 6
++       cmp #$fb             ; key 6
         bne +
         ldy #$00
         sty key2
@@ -104,14 +114,15 @@ get_key_via
 +       cmp #$fb          ; key 5
         bne +
         ldy #$00
-        sty key2
+        sty key1
 
 +       cmp #$f7          ; key  7
         bne +
         ldy #$00
-        sty key4
+        sty key3
 
 +
+        ; Anzeige
         lda key1
         ldy #6*22+5
         jsr hexout
