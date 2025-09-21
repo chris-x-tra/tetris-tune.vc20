@@ -34,7 +34,6 @@ main
 ;---
 ; main
 ;---
-        ;VIDEO_EFFECT = 1
 
         jsr init_sound
 
@@ -46,12 +45,6 @@ mainloop
 	bne -
 
         jsr play_sound
-
-
-!ifdef VIDEO_EFFECT {
-	jsr amazingVideoEffect
-}
-
 
 
 	jmp mainloop
@@ -214,7 +207,7 @@ play3_end
         ; ausgabe auf Bildschirm
 
         ; ausgabe noten
-        ldy #0
+        ldy #0+2*22+5
         lda tune_channels+0
         jsr hexout
 
@@ -229,7 +222,7 @@ play3_end
         jsr hexout 
 
         ;
-        ldy #22
+        ldy #3*22+5
         lda durationChannel1
         jsr hexout
 
@@ -271,28 +264,4 @@ mod_voice2  lda voice2,y
         rts
 mod_voice3  lda voice3,y
         rts
-
-; ---
-; ---
-; ---
-!ifdef VIDEO_EFFECT {
-amazingVideoEffect
-	ldy #16       ; perform amazing video effect
-	lda $900f
-	tax
-	eor #$f7
-	sta $900f
-	stx $900f
-	sta $900f
-	stx $900f
-	sta $900f
-	stx $900f
-	sta $900f
-	stx $900f
-	sta $900f
-	stx $900f
-	sta $900f
-	stx $900f
-	rts
-	}
 

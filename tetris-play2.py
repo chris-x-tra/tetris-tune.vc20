@@ -14,13 +14,19 @@ import argparse
 import os
 import curses
 
-DUR_1_4 = 12
-DUR_2_4 = 24
-DUR_3_4 = 36
-DUR_4_4 = 48
+#DUR_1_4 = 12
+#DUR_2_4 = 24
+#DUR_3_4 = 36
+#DUR_4_4 = 48
+
+DUR_1_4 = 10
+DUR_2_4 = 20
+DUR_3_4 = 30
+DUR_4_4 = 40
 
 DRUM_P = 48
-DRUM_P_2 = 24
+#DRUM_P_2 = 24
+DRUM_P_2 = 20
 
 BD_P = 1
 SD_P = 1
@@ -104,14 +110,14 @@ pattern1 = [
         ]
     # 2. Abschnitt: Bassdrum auf 1 und 3
 pattern2 = [
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P),
-        ("bd", 1), ("p", DRUM_P), ("bd", 1), ("p", DRUM_P)
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2),
+        ("bd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2)
         ]
     # 3. Abschnitt: Bassdrum & Snare im Wechsel
 pattern3 = [
@@ -125,12 +131,12 @@ pattern3 = [
         ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2), ("bd", 1), ("p", DRUM_P_2), ("sd", 1), ("p", DRUM_P_2)
         ]
    # zusammenfgen:
-notes3 = pattern1 + pattern2 + pattern3
+#notes3 = pattern1 + pattern2 + pattern3
+
+notes3 = pattern2 * 3
 
 bd_pattern = [
-    (0x88, BD_P), (0x90, BD_P), (0x98, BD_P), (0xA0, BD_P),
-#    (0xA8, BD_P), (0xB0, BD_P), (0xB8, BD_P), (0xBF, BD_P),
-    (0x00, BD_P), (0x00, BD_P), (0x00, BD_P), (0x00, BD_P),
+    (0xF0, BD_P), (0xD0, BD_P), (0xC0, BD_P), (0x80, BD_P),
     (0x00, BD_P), (0x00, BD_P), (0x00, BD_P), (0x00, BD_P),
     (0x00, BD_P), (0x00, BD_P), (0x00, BD_P), (0x00, BD_P)
 ]
